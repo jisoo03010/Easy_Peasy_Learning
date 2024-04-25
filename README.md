@@ -42,16 +42,7 @@ $ python model_interface.py --port 8080
 
 * API 응답 결과 - 사람이 있는 경우
 ```json
-{
-    "data": {
-        "boxes": [
-            {"age": "", "gender": "", "h": 230, "w": 230, "x": 0, "y": 0 }
-        ],
-        "image": "data:image/jpeg;charset=utf-8;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCAHgAoADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/......."
-    },
-    "result_code": "200",
-    "result_message": "OK"
-}
+
 ```
 
 # 이미지 이진분류 모델 학습 및 테스트 
