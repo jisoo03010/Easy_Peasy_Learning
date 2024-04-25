@@ -1,0 +1,9 @@
+Flask
+flask-cors
+torch
+torchvision
+scikit-learn
+Pillow
+argparse
+tqdm
+split-folders
