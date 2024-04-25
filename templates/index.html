@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Face recognition</title>
+
+    <script>
+
+        function dataURItoBlob(dataURI)
+        {
+            var byteString = atob(dataURI.split(',')[1]);
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+            var ab = new ArrayBuffer(byteString.length);
+            var ia = new Uint8Array(ab);
+            for (var i = 0; i < byteString.length; i++)
+            {
+                ia[i] = byteString.charCodeAt(i);
+            }
+
+            var bb = new Blob([ab], { "type": mimeString });
+            return bb;
+        }
+
+        function capture(){
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            let cameraView = document.getElementById("cameraview");
+
+            ctx.drawImage(cameraView, 0, 0, canvas.width, canvas.height );
+            let image = canvas.toDataURL('image/jpeg');
+            let blob = dataURItoBlob(image);
+            let formData = new FormData();
+            formData.append("image" , blob);
+            formData.append("request_image" , true);
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST" , "/inference/binary_classification" , true);
+
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    let response = JSON.parse(xhr.response);
+                    
+                    if (response["result_code"] == "200") {
+                        if (response["data"] != null) {
+                            let data = response["data"]
+                            let canvas = document.getElementById('img');
+                            canvas.src = data["image"];
+                    
+                            let detected = document.getElementById('detected');
+                            detected.innerHTML= "탐지된 사람 수 : "+ data["boxes"].length;
+                        }
+                    }
+                }
+            };
+            xhr.send(formData);
+        }
+
+        // Init camera
+        function camInit(stream) {
+            var cameraView = document.getElementById("cameraview");
+            cameraView.srcObject = stream;
+            cameraView.play();
+        }
+    
+        function camInitFailed(error) {
+            console.log("get camera permission failed : ", error)
+        }
+    
+        function mainInit() {
+            if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia )
+            {
+                alert("WebCam not supported")
+                return;
+            }
+    
+            navigator.mediaDevices.getUserMedia({video:true})
+                .then(camInit)
+                .catch(camInitFailed);
+        }
+
+        function onWindowResize(){
+            let  imgElement = document.getElementById("img");
+            if (window.innerHeight > window.innerWidth) {
+                imgElement.style.height = "100%"
+                imgElement.style.width = null
+            }else{
+                imgElement.style.height = null
+                imgElement.style.width = "100%"
+            }
+        }
+
+        window.onload = function (){
+            setInterval( function () {
+                capture();
+            }, 250);
+        }
+
+
+    </script>
+</head>
+<body>
+    <video id="cameraview" width="720" height="480" hidden="true"></video>
+    <canvas id="canvas" width="720" height="480" hidden="true"></canvas>
+
+    <h3 id="detected"></h3>
+    <img id="img" width="100%"></img>
+    <script>
+        mainInit();
+    </script>
+
+</body>
+</html>
