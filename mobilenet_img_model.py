@@ -219,6 +219,8 @@ if __name__ == "__main__":
     
     parser.add_argument('--datasets-path', type=str, default= "./sample_data") # 데이터셋의 위치 경로 
     
+    parser.add_argument('--zip-folder-path', type=str, default= './dataset.zip')
+    
     # 저장할 모델의 파일이름 지정
     timestamp = time.strftime("%Y%m%d-%H%M%S")
     default_model_save_path = f"./mobilenet_v{timestamp}.pt"
@@ -228,19 +230,19 @@ if __name__ == "__main__":
     parser.add_argument('--test', action='store_true') # 테스트 데이터 로드여부 지정 
     args = parser.parse_args()
 
+    # 'sample_data' 폴더의 존재를 확인
+    if os.path.isdir(args.datasets_path) == False:
+        print("args.datasets_path : ", args.datasets_path )
+        
+        shutil.unpack_archive(args.zip_folder_path,'./sample_data' ,'zip')
+        splitfolders.ratio("./sample_data/dataset/", output='./sample_data/', seed=1337, ratio=(0.6, 0.2, 0.2))
 
     # '--test' 옵션을 사용하면 모델이 테스트 데이터로 실행
     # Or args.test = false -> 학습데이터로 실행된다.
     if args.test == True:
-        test_dataloaders = test_load_data(args.batch_size, num_workers , args.datasets_path)
+        test_dataloaders = test_load_data(args.batch_size, num_workers , args.datasets_path) # test할때 사용되는 인자 값 : 배치사이즈, 넘버웍스, 데이터셋 경로지정, 생성한 모델 위치 경로 지정,
         f1_last_data = test_model(test_dataloaders, device, args.model_file_path)
     else:
         train_dataloaders, val_dataloaders = load_data(args.batch_size, num_workers, args.datasets_path)
         model, train_loss, test_accu = train_model(train_dataloaders, val_dataloaders, device, args.epoch, args.early_stopping_epochs , args.lr, args.model_save_path)
-
-    # 'sample_data' 폴더의 존재를 확인
-    print("args.datasets_path : ", args.datasets_path )
-    if os.path.isdir(args.datasets_path) == False:
-        shutil.unpack_archive(args.zip_folder_path,'./sample_data' ,'zip')
-        splitfolders.ratio("./sample_data/dataset/", output='./sample_data/', seed=1337, ratio=(0.6, 0.2, 0.2))
 

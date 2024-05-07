@@ -23,10 +23,11 @@ def img_transform(image_bytes):
         transforms.RandomVerticalFlip(p=1.0), 
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ])
-    image = Image.open(io.BytesIO(image_bytes))
+    image = Image.open(io.BytesIO(image_bytes)).convert('RGB')
     image = data_transforms(image)
     image = image.unsqueeze(0)
     image = image.reshape(1, 3, 230, 230) # 배치, 채널, 높이, 너비
+    
     return image
 
 
@@ -89,7 +90,8 @@ def binary_classification():
         
         human_data = (1 -  data ) * 100
         no_human_data = data * 100
-        
+        print(f"human_data : {human_data:.4f}")
+        print(f"no_human_data : {no_human_data:.4f}")
         if human_data > no_human_data:
             json_boxes = []
             json_boxes = boxes_to_json(image_tensor.size())
