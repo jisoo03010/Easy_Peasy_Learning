@@ -1,0 +1,61 @@
+파라미터 전달 하는 API : POST  /model/request
+파라미터 전달 하는 API : POST  /model/request
+
+- 모델 만들기
+1. 모델 파라미터 입력
+2. 모델 파이썬 파일 실행
+4. 파일 저장 (모델 pt 파일)
+3. 결과 값 (정확도) 웹 프론트로 전달
+4. 화면에서 보여주기
+
+
+- 모델 사용해서 이미지 맞춰보기
+1. 모델 pt파일 선택 
+2. 모델 load 시키기
+3. 이미지 받아오기 
+4. 모델에  이미지 넣기
+
+
+
+model = models.densenet161(pretrained=True)
+model.classifier = nn.Linear(2208, 3) 
+model.load_state_dict(torch.load('model.pt', map_location=device))
+model.eval()
+
+
+
+
+def predict(image_bytes):
+    data_transforms = transforms.Compose([transforms.Resize((230, 230)),
+                                        transforms.RandomCrop(224),
+                                        transforms.ToTensor()])
+    #image = Image.open("./static/image/eun.jpg")  # image input 
+    image = Image.open(image_bytes)
+    image = data_transforms(image)
+    image = image.to(device)
+    image = image.reshape(1, 3, 224, 224)
+    print("image=>>>", image) # tensor로 변환함 
+    pred = model(image)
+    #softmax(1) shape을 다 합쳤을때 1이 안되서 소프트맥스를 사용해서 1을 만들어 준뒤에 
+    pred = F.softmax(pred)
+    # pred = pred.max(pred.data, 1)
+    for p in pred:
+        print('\n =======정확도=======\n{:.4f}% : eum_data, \n{:.4f}% : ma_data, \n{:.4f}% : son_data'.format(p[0]*100, p[1]*100, p[2]*100))
+        print(pred.argmax(1),"번")
+        
+    #max값 구하기 
+    
+    
+    # 몇 번째 인덱스에 몇 퍼센트인지 수치상으로 보여주기 
+    return pred
+
+
+@app.route("/upload", methods=['POST'])
+def upload():
+    
+    file_upload = request.files['file_lo'] # 받아온 파일 
+    pp = predict(file_upload)
+    for p in pp:
+        predd = {"eum_data" : "{:.4f}%".format(p[0]*100), "ma_data" : "{:.4f}%".format(p[1]*100), "son_data" : "{:.4f}%".format(p[2]*100), "max_data" : "{}".format(pp.argmax(1).item() )}
+    return jsonify(predd)
+
