@@ -5,6 +5,7 @@ import torch
 import torch.nn as nn
 import logging
 import torchvision.datasets as datasets_module
+from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 from sklearn.metrics import f1_score
 from torchvision.models import mobilenet_v2 
@@ -41,7 +42,7 @@ def test_load_data(batch_size, num_workers, datasets_path):
     datasets = {x: datasets_module.ImageFolder(os.path.join(datasets_path, x), data_transforms[x])
             for x in ['test']}
 
-    test_dataloaders = torch.utils.data.DataLoader(
+    test_dataloaders = DataLoader(
             datasets['test'],
             batch_size=batch_size,
             num_workers=num_workers,
@@ -71,7 +72,7 @@ def load_data(batch_size, num_workers, datasets_path):
     datasets = {x: datasets_module.ImageFolder(os.path.join(datasets_path, x), data_transforms[x])
             for x in ['train', 'val']}
 
-    train_dataloaders = torch.utils.data.DataLoader(
+    train_dataloaders = DataLoader(
         datasets['train'],
         batch_size=batch_size, 
         shuffle=True,
@@ -80,7 +81,7 @@ def load_data(batch_size, num_workers, datasets_path):
         drop_last=True
     )
 
-    val_dataloaders = torch.utils.data.DataLoader(
+    val_dataloaders = DataLoader(
         datasets['val'],
         batch_size=batch_size, 
         num_workers=num_workers,

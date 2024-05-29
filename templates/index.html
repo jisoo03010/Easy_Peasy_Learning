@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Semantic HTML Structure with Flexbox</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Text&display=swap">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,11 +15,22 @@
             /* font-family: Century Gothic, sans-serif; */
             font-family : 'Red Hat Text', sans-serif;
         }
+        .ubuntu-condensed-regular {
+            font-family: "Ubuntu Condensed", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        h3{line-height: 40px;}
         ul,li{list-style: none;}
-        .flex{display: flex; height:92%;}
+        .flex{display: flex; height: 100%;}
+        .image_style_common{
+            width: 18px; 
+            margin: 0 20px 0 10px;
+            filter: invert(66%) sepia(15%) saturate(482%) hue-rotate(197deg) brightness(91%) contrast(89%);
+        }
         nav {
             width: 15%;
-            background: rgb(255, 255, 255);
+            background: #11143D;
         }
         main {
             width: 85%;
@@ -29,11 +43,6 @@
             width: 100%;
             display: flex;
         }
-        /* aside {
-            background-color: #f4f4f4;
-            width: 20%;
-            background: rgb(0, 174, 255);
-        } */
         footer {
             background: rgb(0, 139, 204);
             color: #fff;
@@ -42,14 +51,16 @@
         }
 
         /* left menu */
-        #logo_box{text-align: center; padding: 23px 0 0 0; width: 95%; margin: 0 auto;}
+        #logo_box{display: flex; text-align: center; padding: 23px 0 0 0; justify-content:center; color: white; align-items: center;}
     
-        #logo_box > img{width: 90%; display: block; }
+        #logo_box > img{width: 32px; display: block; padding-right: 10px;}
         .content{width: 100%;}
         .main_menu{
             width: 100%;
             margin-top: 80px;
-            background-color: gray;
+        }
+        .main_menu > ul {
+            padding: 16px;
         }
         .main_menu > ul >li{
             cursor: pointer;
@@ -57,36 +68,76 @@
             text-align: left; 
             line-height: 40px; 
             align-items: center; 
-            background: white; 
-            color: black;
+            color: #9699B8;
+            border-radius: 8px;
             display: flex;
         }
-        .main_menu > ul >li > img{width: 24px; margin: 0 20px 0 10px;}
-        .main_menu > ul >li:hover{
-            color: #4C70F9;
-            background-color: #eaeeff;
-        }
+        .main_menu > ul >li:hover {
+            color: #1ADEC2;
+            background-color: #2B2D53;
+        } 
+        .main_menu > ul >li:hover .image_style_common{
+            filter: invert(85%) sepia(85%) saturate(5323%) hue-rotate(90deg) brightness(96%) contrast(80%);
+        } 
         /* main */
-        .header{height: 8%; width: 100%; background-color: rgb(255, 255, 255); border-bottom: 1px solid rgb(204, 204, 204);}
         .container{
             height: 100%; 
-            width: 80%; 
-            background-color: #f3f6f9; 
+            width: 18%; 
+            background-color: white; 
             display: flex;
             overflow: scroll;
             flex-direction: column;
             align-items: center;
         }
-        .container > div{ border-radius: 10px;width: 60%; }
-        .step_one_box{height: 100%; background: #ffffff; margin-top: 40px;}
-        .step_two_box{ height: 100%; background: #ffffff;}
-        .step_three_box{ height: 100%; background: #ffffff;margin-bottom: 25px;}
+        .container > div{ border-radius: 10px;width: 70%; height: 16%; }
+        .step_boxs{height: 100%; 
+            border: 1px solid rgb(238, 238, 238);}
+        .step_one_box{ margin-top: 40px; background: #ddfffa;}
+        .step_two_box{ background: #F8FCFD;}
+        .step_three_box{  background: #F8FCFD;margin-bottom: 25px;}
 
-        .setting_menu{width: 20%; box-shadow: 4px 11px 11px 6px #ababab21; height: 100%; background-color: #ffffff;}
-        .setting_box1{width: 80%; height: 100px; border-radius: 15px; background-color: white;}
-        .setting_box2{width: 80%; height: 100px; border-radius: 15px; background-color: white;}
-        .setting_box3{width: 80%; height: 100px; border-radius: 15px; background-color: white;}
+        .setting_menu{width: 82%; box-shadow: 4px 11px 11px 6px #ababab21; height: 100%; background-color: #FAFBFD;}
 
+        .setting_top_box{
+            /* padding: 30px 0 10px 38px; */
+align-items: end;
+height: 8%;
+justify-content: center;
+/* justify-content: space-between; */
+width: 100%;
+        }
+        .setting_bottom_box{height: 87%; margin: 0 auto;}
+
+        .setting_box{
+            width: 90%;
+            margin: 0 auto;
+            height: 20%; border-radius: 15px; background-color: white; margin-bottom: 20px;
+            border: 1px solid rgb(238, 238, 238);
+        }
+
+        .hide_load{align-items: center; font-size: 12px; color: gray; cursor: pointer; display: flex;}
+        #back_hide_icon{width: 15px; filter: invert(72%) sepia(5%) saturate(23%) hue-rotate(360deg) brightness(88%) contrast(92%);}
+        .botton_box {display: flex; width: 20%;}
+        .botton_box  div{
+            width: 76px;
+            height: 38px;
+            border: none;
+            outline: none;
+            font-size: 12px;
+            border-radius: 6px;
+            cursor: pointer;display: flex; align-items: center; justify-content: space-evenly;
+            align-items: center;
+            box-sizing: border-box;
+        }
+        .botton_box > div > img{
+            width: 16px;
+        }
+
+        #done_btn{background: #ddfffa; color: #1ADEC2;  margin-left: 10px;}
+
+        #save_btn > img{ filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(256deg) brightness(101%) contrast(103%);}
+        #done_btn > img{  filter: invert(85%) sepia(85%) saturate(5323%) hue-rotate(90deg) brightness(96%) contrast(80%);}
+        #save_btn{background: #1ADEC2; color: #ddfffa; }
         @media (max-width: 1312px) {
             nav{
                 width: 60px;
@@ -105,7 +156,7 @@
             }
         }
 
-
+        .title{width: 70%;}
         .title_box{padding: 10px 0px 10px 10px; font-size: 0.8em; height: 7%;}
         .add_datasets_contents_box{
             color: #b8b8b8;
@@ -119,11 +170,11 @@
             border-radius: 3px;
             border-width: 2px;
         }
-        .add_datasets_contents_box > img{
+        /* .add_datasets_contents_box > img{
             filter: invert(79%) sepia(0%) saturate(4163%) hue-rotate(75deg) brightness(94%) contrast(99%);
-        }
+        } */
 /*  */
-        .add_datasets_contents_box > input{
+        /* .add_datasets_contents_box > input{
             padding: 5px;
             border: none;
             outline: none;
@@ -132,8 +183,8 @@
             background: #d3d3d3;
             border-radius: 3px;
             cursor: pointer;
-        }
-        .add_datasets_contents_box > input:hover{background-color: #bfbfbf ;}
+        } */
+        /* .add_datasets_contents_box > input:hover{background-color: #bfbfbf ;} */
     </style>
 </head>
 <body>
@@ -143,28 +194,25 @@
     <nav>
         <div class="content">
             <div id="logo_box">
-                <img src="../static/logo.svg" alt="logo image">
+                <img src="../static/logo.png" alt="logo image"> 
+                <div class="ubuntu-condensed-regular">Easy Peasy Learning</div>
             </div>
             <div class="main_menu">
                 <ul>
                     <li>
-                        <img src="../static/home_icon.png" alt="home">
-                        <span>Home</span>
-                    </li>
-                    <li>
-                        <img src="../static/dashboard_icon.png" alt="dashboard_icon">
+                        <img class="image_style_common" src="../static/home_icon.svg" alt="dashboard_icon">
                         <span>Dashboard</span>
                     </li>
                     <li>
-                        <img src="../static/projects_icon.png" alt="projects_icon">
+                        <img class="image_style_common" src="../static/bookmark.svg" alt="projects_icon">
                         <span>Projects</span>
                     </li>
                     <li>
-                        <img src="../static/info_icon.png" alt="info_icon">
+                        <img class="image_style_common" src="../static/comment-info.svg" alt="info_icon">
                         <span>Info</span>
                     </li>
                     <li>
-                        <img src="../static/setting_icon.png" alt="setting_icon">
+                        <img class="image_style_common" src="../static/settings.svg" alt="setting_icon">
                         <span>Settings</span>
                     </li>
                 </ul>
@@ -176,38 +224,58 @@
     </nav>
 
     <main>
-        <div class="header"></div>
         <div class="flex">
             <div class="container">
-                <div class="step_one_box">
+                <div class="step_one_box step_boxs">
 
                     <div class="title_box">Add datasets</div>
-                    <div class="add_datasets_contents_box " >
+                    <!-- <div class="add_datasets_contents_box " >
                         <img src="../static/file_upload_icon.svg" alt="file_upload_icon">
                         <p>Drag and Drop files here</p>
                         <p>Files Supported: PDF, XSLS, Image, Scanner</p>
                         <input type="button" value="Choose File">
-                    </div>
+                    </div> -->
                 </div>
                 <img src="../static/Line 8.png" alt="">
 
-                <div class="step_two_box">
+                <div class="step_two_box step_boxs">
                     <div class="title_box">Data learning</div>
                     <div class="data_learning_contents_box"></div>
                 </div>
                 <img src="../static/Line 8.png" alt="">
 
-                <div class="step_three_box">
+                <div class="step_three_box step_boxs">
                     <div class="title_box">Data visualization</div>
                     <div class="data_visualization_contents_box"></div>
                 </div>
     
             </div>
 
-            <div class="setting_menu">
-                <div class="setting_box1"></div>
-                <div class="setting_box2"></div>
-                <div class="setting_box3"></div>
+            <div class="setting_menu ">
+                <div class="setting_top_box flex">
+                    <div class="title">
+                        <div class="hide_load">
+                            <img id="back_hide_icon" src="../static/angle-small-left.svg" alt="back icon"> 
+                            <div>전체보기</div>
+                        </div>
+                        <h3>{000단계 셋팅 하기 ~}</h3>
+                    </div>
+                    <div class="botton_box">
+                        <div id="save_btn">
+                            <img src="../static/folder-download.svg" alt="">
+                            save
+                        </div>
+                        <div id="done_btn">
+                            <img src="../static/circle-xmark.svg" alt="">
+                            close
+                        </div>
+                    </div>
+                </div>
+                <div class="setting_bottom_box">
+                    <div class="setting_box"></div>
+                    <div class="setting_box"></div>
+                    <div class="setting_box"></div>
+                </div>
             </div>
 
         </div>
