@@ -1,0 +1,136 @@
+1. 모델 만들기
+
+    (1) 모델 파라미터 입력
+
+        API: POST /train/parameters
+        설명: 모델 학습에 필요한 파라미터를 입력받아 저장합니다.
+        요청 예시:
+        {
+            "learning_rate": 0.001,
+            "epochs": 10,
+            "batch_size": 32,
+            "model_type": "resnet"
+        }
+        응답 예시:
+        json
+
+        {
+            "status": "success",
+            "message": "Parameters saved."
+        }
+
+
+
+    (2) 모델 파이썬 파일 실행 및 모델 저장
+
+        API: POST /train/start
+        설명: 모델 학습을 시작하고 완료되면 모델을 저장합니다.
+        요청 예시:
+        json
+
+        {
+            "parameters_id": "123456"
+        }
+        응답 예시:
+        json
+
+        {
+            "status": "success",
+            "message": "Training started.",
+            "task_id": "abcdef"
+        }
+
+    (3) 결과 값 (정확도) 웹 프론트로 전달
+
+        API: GET /train/status
+        설명: 학습 진행 상태 및 최종 결과(예: 정확도)를 반환합니다.
+        요청 예시:
+        json
+
+        {
+            "task_id": "abcdef"
+        }
+        응답 예시:
+        json
+
+        {
+            "status": "in_progress",
+            "progress": 50
+        }
+        또는
+        json
+
+        {
+            "status": "completed",
+            "accuracy": 0.85
+        }
+
+
+4. 모델 사용해서 이미지 맞춰보기
+    (1) 모델 pt 파일 선택
+        API: GET /models
+        설명: 저장된 모델 파일 리스트를 반환합니다.
+        응답 예시:
+        json
+
+        {
+            "models": [
+                {"id": "model1", "name": "resnet_model_1.pt"},
+                {"id": "model2", "name": "resnet_model_2.pt"}
+            ]
+        }
+
+    (2) 모델 load 시키기
+
+        API: POST /model/load
+        설명: 선택된 모델을 메모리에 로드합니다.
+        요청 예시:
+        json
+
+        {
+            "model_id": "model1"
+        }
+        응답 예시:
+        json
+
+        {
+            "status": "success",
+            "message": "Model loaded."
+        }
+
+    (3) 이미지 받아오기
+
+        API: POST /image/upload
+        설명: 예측할 이미지를 업로드합니다.
+        요청 예시:
+        json
+
+        {
+            "image_data": "base64encodedstring"
+        }
+        응답 예시:
+        json
+
+        {
+            "status": "success",
+            "message": "Image uploaded.",
+            "image_id": "img12345"
+        }
+
+
+    (4) 모델에 이미지 넣기
+        API: POST /predict
+        설명: 업로드된 이미지를 모델에 입력하여 예측 결과를 반환합니다.
+        요청 예시:
+        json
+
+        {
+            "image_id": "img12345"
+        }
+        응답 예시:
+        json
+
+        {
+            "status": "success",
+            "prediction": "cat"
+        }
