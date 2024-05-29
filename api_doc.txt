@@ -1,5 +1,4 @@
 파라미터 전달 하는 API : POST  /model/request
-파라미터 전달 하는 API : POST  /model/request
 
 - 모델 만들기
 1. 모델 파라미터 입력
@@ -14,6 +13,24 @@
 2. 모델 load 시키기
 3. 이미지 받아오기 
 4. 모델에  이미지 넣기
+
+
+- 모델 만들기 API
+POST /train/parameters
+POST /train/start
+GET /train/status
+
+- 모델 사용하기 API
+GET /models
+POST /model/load
+POST /image/upload
+POST /predict
+
+
+
+
+
+
 
 
 

@@ -9,9 +9,13 @@ import torchvision.transforms as transforms
 from sklearn.metrics import f1_score
 from torchvision.models import mobilenet_v2 
 from tqdm import tqdm
+
+from numpy import reshape
+import torch.nn.functional as F
 import shutil
 import splitfolders 
 
+from PIL import Image
 
 best_loss = float('inf')
 num_workers = 0
@@ -172,7 +176,7 @@ def train_model(train_dataloaders,val_dataloaders, device, epochs, early_stop_co
             if early_stop_counter >= args.early_stopping_epochs:
                 logging.info("Early Stopping!")
                 break 
-    return model, train_loss, test_accu
+    return model, train_loss, test_accu, model_save_path
 
 
 def test_model(test_dataloaders, device, model_file_path):
@@ -207,6 +211,32 @@ def test_model(test_dataloaders, device, model_file_path):
     return f1_last_data
 
 
+def predict(image_bytes):
+    data_transforms = transforms.Compose([
+            transforms.Resize((230, 230)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    ])
+    #image = Image.open("./static/image/eun.jpg")  # image input 
+    image = Image.open(image_bytes)
+    image = data_transforms(image)
+    image = image.unsqueeze(0)
+    image = image.reshape(1, 3, 230, 230) # 배치, 채널, 높이, 너비
+    print("image=>>>", image) # tensor로 변환함 
+    pred = model(image)
+    #softmax(1) shape을 다 합쳤을때 1이 안되서 소프트맥스를 사용해서 1을 만들어 준뒤에 
+    pred = F.softmax(pred)
+    # pred = pred.max(pred.data, 1)
+    for p in pred:
+        print('\n =======정확도=======\n{:.4f}% : eum_data, \n{:.4f}% : ma_data, \n{:.4f}% : son_data'.format(p[0]*100, p[1]*100, p[2]*100))
+        print(pred.argmax(1),"번")
+        
+    # 몇 번째 인덱스에 몇 퍼센트인지 수치상으로 보여주기 
+    return pred
+    
+
+
+
 
 if __name__ == "__main__":
     
@@ -236,7 +266,7 @@ if __name__ == "__main__":
         f1_last_data = test_model(test_dataloaders, device, args.model_file_path)
     else:
         train_dataloaders, val_dataloaders = load_data(args.batch_size, num_workers, args.datasets_path)
-        model, train_loss, test_accu = train_model(train_dataloaders, val_dataloaders, device, args.epoch, args.early_stopping_epochs , args.lr, args.model_save_path)
+        model, train_loss, test_accu, model_save_path = train_model(train_dataloaders, val_dataloaders, device, args.epoch, args.early_stopping_epochs , args.lr, args.model_save_path)
 
     # 'sample_data' 폴더의 존재를 확인
     print("args.datasets_path : ", args.datasets_path )
