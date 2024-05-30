@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from mobilenet_img_model import  train_model, load_data , predict
 import time
-# import argparse
-import os
 
 app = Flask(__name__)
 

@@ -7,14 +7,28 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Text&display=swap">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             /* font-family: Century Gothic, sans-serif; */
-            font-family : 'Red Hat Text', sans-serif;
+            /* font-family : 'Red Hat Text', sans-serif;
+             */
+
+            font-family: "Noto Sans KR", sans-serif;
+            font-optical-sizing: auto;
+            /* font-weight: <weight>; */
+            font-style: normal;
         }
+        .noto-sans-kr {
+        }
+
+        body{overflow: hidden;}
         .ubuntu-condensed-regular {
             font-family: "Ubuntu Condensed", sans-serif;
             font-weight: 400;
@@ -23,17 +37,23 @@
         h3{line-height: 40px;}
         ul,li{list-style: none;}
         .flex{display: flex; height: 100%;}
+        hr {
+            background:rgb(197, 197, 197);
+            height:1px;
+            border:0;
+            margin-bottom: 30px;
+        }
         .image_style_common{
             width: 18px; 
             margin: 0 20px 0 10px;
             filter: invert(66%) sepia(15%) saturate(482%) hue-rotate(197deg) brightness(91%) contrast(89%);
         }
         nav {
-            width: 15%;
+            width: 250px;
             background: #11143D;
         }
         main {
-            width: 85%;
+            flex: 1;
             height: 100%;
             background: rgb(46, 189, 255);
         }
@@ -51,7 +71,7 @@
         }
 
         /* left menu */
-        #logo_box{display: flex; text-align: center; padding: 23px 0 0 0; justify-content:center; color: white; align-items: center;}
+        #logo_box{cursor: pointer; display: flex; text-align: center; padding: 23px 0 0 0; justify-content:center; color: white; align-items: center;}
     
         #logo_box > img{width: 32px; display: block; padding-right: 10px;}
         .content{width: 100%;}
@@ -82,50 +102,50 @@
         /* main */
         .container{
             height: 100%; 
-            width: 18%; 
+            width: 250px; 
             background-color: white; 
             display: flex;
-            overflow: scroll;
+            box-shadow: 4px 11px 11px 6px #ababab21;
             flex-direction: column;
             align-items: center;
         }
-        .container > div{ border-radius: 10px;width: 70%; height: 16%; }
-        .step_boxs{height: 100%; 
-            border: 1px solid rgb(238, 238, 238);}
+        .container > div{ border-radius: 10px; width: 80%; height: 150px; }
+        .step_boxs{height: 100%; cursor: pointer; border: 1px solid rgb(238, 238, 238);}
+        .step_boxs:hover{box-shadow: 0px 0px 5px 3px #ababab21;}
         .step_one_box{ margin-top: 40px; background: #ddfffa;}
         .step_two_box{ background: #F8FCFD;}
         .step_three_box{  background: #F8FCFD;margin-bottom: 25px;}
 
-        .setting_menu{width: 82%; box-shadow: 4px 11px 11px 6px #ababab21; height: 100%; background-color: #FAFBFD;}
+        .setting_menu{flex: 1; padding: 0 100px 0  100px;
+             height: 100%; background-color: #FAFBFD;}
 
         .setting_top_box{
             /* padding: 30px 0 10px 38px; */
-align-items: end;
-height: 8%;
-justify-content: center;
-/* justify-content: space-between; */
-width: 100%;
+            align-items: end;
+            height: 8%;
+            margin-bottom: 20px;
+            justify-content: space-between;
+            width: 100%;
         }
         .setting_bottom_box{height: 87%; margin: 0 auto;}
 
-        .setting_box{
-            width: 90%;
-            margin: 0 auto;
-            height: 20%; border-radius: 15px; background-color: white; margin-bottom: 20px;
-            border: 1px solid rgb(238, 238, 238);
-        }
+        
 
         .hide_load{align-items: center; font-size: 12px; color: gray; cursor: pointer; display: flex;}
         #back_hide_icon{width: 15px; filter: invert(72%) sepia(5%) saturate(23%) hue-rotate(360deg) brightness(88%) contrast(92%);}
-        .botton_box {display: flex; width: 20%;}
+        .botton_box {display: flex; }
         .botton_box  div{
-            width: 76px;
-            height: 38px;
+            width: 100px;
+            height: 40px;
             border: none;
             outline: none;
-            font-size: 12px;
+            font-size: 16px;
+            font-weight: bold;
             border-radius: 6px;
-            cursor: pointer;display: flex; align-items: center; justify-content: space-evenly;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
             align-items: center;
             box-sizing: border-box;
         }
@@ -133,11 +153,37 @@ width: 100%;
             width: 16px;
         }
 
-        #done_btn{background: #ddfffa; color: #1ADEC2;  margin-left: 10px;}
+       
+        
+        #done_btn{border: 1px solid #dc3545; color: #dc3545; transition: .3s; margin-left: 10px;}
+        #save_btn{border: 1px solid #1ADEC2;  color: #1ADEC2; transition: .3s; }
+       
 
-        #save_btn > img{ filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(256deg) brightness(101%) contrast(103%);}
-        #done_btn > img{  filter: invert(85%) sepia(85%) saturate(5323%) hue-rotate(90deg) brightness(96%) contrast(80%);}
-        #save_btn{background: #1ADEC2; color: #ddfffa; }
+        #save_btn > img {
+        filter: invert(85%) sepia(85%) saturate(5323%) hue-rotate(90deg) brightness(96%) contrast(80%);
+        }
+
+        #done_btn > img {
+        filter: invert(25%) sepia(55%) saturate(2942%) hue-rotate(336deg) brightness(100%) contrast(84%);
+        }
+
+        #save_btn:hover {
+        background-color: #1ADEC2;
+        color: white;
+        }
+
+        #save_btn:hover > img {
+        filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+        }
+
+        #done_btn:hover {
+        background-color: #dc3545;
+        color: white;
+        }
+        #done_btn:hover > img {
+        filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+        }
+
         @media (max-width: 1312px) {
             nav{
                 width: 60px;
@@ -156,7 +202,6 @@ width: 100%;
             }
         }
 
-        .title{width: 70%;}
         .title_box{padding: 10px 0px 10px 10px; font-size: 0.8em; height: 7%;}
         .add_datasets_contents_box{
             color: #b8b8b8;
@@ -170,21 +215,145 @@ width: 100%;
             border-radius: 3px;
             border-width: 2px;
         }
-        /* .add_datasets_contents_box > img{
-            filter: invert(79%) sepia(0%) saturate(4163%) hue-rotate(75deg) brightness(94%) contrast(99%);
-        } */
-/*  */
-        /* .add_datasets_contents_box > input{
-            padding: 5px;
-            border: none;
+
+        .setting_box {
+            padding: 30px;
+            width: 900px;
+            margin: 20px auto;
+            border-radius: 15px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(89, 89, 89, 0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .setting_box label {
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 5px;
+        }
+
+        .setting_box input {
+            padding: 10px;
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+            font-size: 16px;
+            width: 400px;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .setting_box input:focus {
+            border-color: #1ADEC2;
             outline: none;
-            margin: 10px;
+            box-shadow: 0 0 5px rgba(26, 222, 194, 0.5);
+        }
+
+        .form_save_btn button {
+            padding:12px 15px 12px 15px;
+            border: none;
+            width: 100px;
+            border-radius: 8px;
+            background-color: #1ADEC2;
             color: white;
-            background: #d3d3d3;
-            border-radius: 3px;
+            font-size: 16px;
             cursor: pointer;
-        } */
-        /* .add_datasets_contents_box > input:hover{background-color: #bfbfbf ;} */
+            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .setting_box button:hover {
+            background-color: #17c2ad;
+            box-shadow: 0 8px 16px rgba(23, 194, 173, 0.3);
+        }
+        .form-group-box{justify-content: space-around;}
+    
+        .form_save_btn{ display: flex; justify-content: flex-end;}
+        .learning_start_btn{
+            float: right;
+            padding:12px 15px 12px 15px;
+            border: none;
+            width: 130px;
+            border-radius: 8px;
+            background-color: #1ADEC2;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .learning_start_btn:hover {
+            background-color: #17c2ad;
+            box-shadow: 0 8px 16px rgba(23, 194, 173, 0.3);
+        }
+
+        
+        /* 모델 선택 폼 스타일 */
+        /* .choose_model_box1{width: 180px; height: 190px; background-color: white; border: 1px solid lightgray;}
+         */
+        form{ padding: 22px; }
+        .card {
+            position: relative;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            height: 165px;
+            max-width: 134px;
+            margin-right: 30px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card-image {
+            width: 60%;
+            height: auto;
+            margin-top: 20px;
+        }
+
+
+        .card-title {
+            font-size: 0.8em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .card-description {
+            font-size: 1em;
+            margin-bottom: 20px;
+            color: #777;
+        }
+        .radio-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            background-color: #fff;
+        }
+
+        .radio-button.checked {
+            background-color: #1ADEC2;
+            border: 1px solid #1ADEC2;
+
+            background-image: url('../static/white_check_icon.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .card.selected {
+            border-color: #1ADEC2;
+            outline: none;
+            box-shadow: 0 0px 7px 2px rgba(26, 222, 194, 0.5);
+        }
+
     </style>
 </head>
 <body>
@@ -271,10 +440,74 @@ width: 100%;
                         </div>
                     </div>
                 </div>
+                <hr>
                 <div class="setting_bottom_box">
+                    
+                    <div class="setting_box">
+                        모델을 선택해주세요.
+                        <form class="flex choose_model_form">
+                            <div class="card">
+
+                                <div class="radio-button"></div>
+                                <img src="../static/logo_chractor2.png" alt="Card Image" class="card-image">
+                                <div>
+                                    <h2 class="card-title">Mobilenet_v2</h2>
+                                </div>
+                            </div>
+                            <div class="card">
+                                
+                                <div class="radio-button"></div>
+                                <img src="../static/logo_chractor2.png" alt="Card Image" class="card-image">
+                                <div>
+                                    <h2 class="card-title">삐비빅 준비중..</h2>
+                                </div>
+                            </div>
+                            <div class="card">
+                                
+                                <div class="radio-button"></div>
+                                <img src="../static/logo_chractor2.png" alt="Card Image" class="card-image">
+                                <div>
+                                    <h2 class="card-title">삐비빅 준비중..</h2>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="setting_box">
+                        모델의 파라미터를 지정해주세요.
+                        <form>
+                            <div class="flex form-group-box">
+                                <div class="form-group">
+                                    <div>Batch Size:</div>
+                                    <input type="number" id="batch_size" name="batch_size" min="1" required>
+                                </div>
+                                <div class="form-group">
+                                    <div>Learning Rate:</div>
+                                    <input type="number" id="lr" name="lr" step="0.0001" required>
+                                </div>
+                            </div>
+
+                            <div class="flex form-group-box">
+                                <div class="form-group">
+                                    <div>Stop Number:</div>
+                                    <input type="number" id="stop_number" name="stop_number" min="1" required>
+                                </div>
+                                <div class="form-group">
+                                    <div>File Name:</div>
+                                    <input type="text" id="file_name" name="file_name" required>
+                                </div>
+                            </div>
+                           
+                            <div class="form_save_btn">
+
+                                <button type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+  
                     <div class="setting_box"></div>
-                    <div class="setting_box"></div>
-                    <div class="setting_box"></div>
+                    <div>
+                        <button type="submit" class="learning_start_btn">Learing Start!</button>
+                    </div>
                 </div>
             </div>
 
@@ -283,5 +516,6 @@ width: 100%;
 
 </section>
 
+<script src="../static/common.js"></script>
 </body>
 </html>
