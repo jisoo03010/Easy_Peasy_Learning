@@ -25,7 +25,7 @@ def img_transform(image_bytes):
     ])
     image = Image.open(io.BytesIO(image_bytes))
     image = data_transforms(image)
-    image = image.unsqueeze(0)
+    image = image.unsqueeze(0) # type: ignore
     image = image.reshape(1, 3, 230, 230) # 배치, 채널, 높이, 너비
     return image
 
@@ -99,7 +99,7 @@ def binary_classification():
         result = { "result_code": result_code, "result_message": result_message, "data": { 'boxes':  json_boxes} }
 
         if is_request_image :
-            result['data']['image'] = "data:image/jpeg;charset=utf-8;base64," + serve_pil_image(frame)
+            result['data']['image'] = "data:image/jpeg;charset=utf-8;base64," + serve_pil_image(frame) # type: ignore
     
     except FileNotFoundError as e:
         logging.error(e)

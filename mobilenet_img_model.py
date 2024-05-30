@@ -57,7 +57,7 @@ def load_data(batch_size, num_workers, datasets_path):
     data_transforms = {
         'train': transforms.Compose([
             transforms.Resize((230, 230)),
-            transforms.ColorJitter(brightness=(0.8, 0.9)),
+            transforms.ColorJitter(brightness=(0.8, 0.9)), # type: ignore
             transforms.RandomVerticalFlip(p=1.0),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
@@ -213,15 +213,15 @@ def test_model(test_dataloaders, device, model_file_path):
 
 
 def predict(image_bytes):
+    image = Image.open(image_bytes)
     data_transforms = transforms.Compose([
             transforms.Resize((230, 230)),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ])
     #image = Image.open("./static/image/eun.jpg")  # image input 
-    image = Image.open(image_bytes)
     image = data_transforms(image)
-    image = image.unsqueeze(0)
+    image = image.unsqueeze(0) # type: ignore
     image = image.reshape(1, 3, 230, 230) # 배치, 채널, 높이, 너비
     print("image=>>>", image) # tensor로 변환함 
     pred = model(image)
