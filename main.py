@@ -4,6 +4,15 @@ import time
 
 app = Flask(__name__)
 
+
+# 프로그램의 디버깅이 모두 끝나면 웹 애플리케이션에서 디버깅 모드를 끄는게 좋다.
+# eu : 디버깅 콘솔에 출력되는 정보를 이용할 경우 외부 공격자에게 웹 애플리케이션의 취약점을 노출할 수 있기 때문이다. 
+app.debug = True
+
+# app.config.update(
+#     DEBUG=True
+# )
+
 @app.route('/')
 def index_template():
     return render_template("index.html")
