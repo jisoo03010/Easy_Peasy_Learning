@@ -32,6 +32,8 @@
         .ubuntu-condensed-regular {
             font-family: "Ubuntu Condensed", sans-serif;
             font-weight: 400;
+
+            font-size: 18px;
             font-style: normal;
         }
         h1{line-height: 40px;}
@@ -74,7 +76,7 @@
         /* left menu */
         #logo_box{cursor: pointer; display: flex; text-align: center; padding: 23px 0 0 0; justify-content:center; color: white; align-items: center;}
     
-        #logo_box > img{width: 32px; display: block; padding-right: 10px;}
+        #logo_box > img{width: 31px; display: block; padding-right: 10px;}
         .content{width: 100%;}
         .main_menu{
             width: 100%;
@@ -91,9 +93,12 @@
             align-items: center; 
             border-radius: 8px;
             display: flex;
+            margin-bottom: 10px;
         }
         .main_menu > ul >li >a{
             color: #9699B8;
+            align-items: center;
+            display: flex;
             
         }
         .main_menu > ul li:hover  a{
@@ -159,9 +164,9 @@
             width: 16px;
         }
 
-       
+       #file_list, #file_list2{flex-wrap: wrap; overflow-y: scroll; height: 300px;}
         
-        #done_btn{border: 1px solid #dc3545; color: #dc3545; transition: .3s; margin-left: 10px;}
+        /* #done_btn{border: 1px solid #dc3545; color: #dc3545; transition: .3s; margin-left: 10px;}
         #save_btn{border: 1px solid #1ADEC2;  color: #1ADEC2; transition: .3s; }
        
 
@@ -171,40 +176,47 @@
 
         #done_btn > img {
         filter: invert(25%) sepia(55%) saturate(2942%) hue-rotate(336deg) brightness(100%) contrast(84%);
-        }
+        } */
 
-        #save_btn:hover {
+        /* #save_btn:hover {
         background-color: #1ADEC2;
         color: white;
         }
 
         #save_btn:hover > img {
         filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
-        }
+        } */
 
-        #done_btn:hover {
+        /* #done_btn:hover {
         background-color: #dc3545;
         color: white;
         }
         #done_btn:hover > img {
         filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
-        }
+        } */
+
+        .model_select{margin-bottom: 25px;}
         @media (max-width: 1312px) {
             nav{
-                width: 60px;
+                width: 100px;
             }
             .main_menu > ul > li > a> span{
                 display: none;
             }
             .main_menu > ul > li {
+                display:block;
                 padding: 10px 10px; 
+                text-align: center;
             }
+            .image_style_common {margin: 0;}
 
 
             #logo_box > img{
-                width: 100%;
-                content: url(../static/small_logo.png);
+                width: 50px;
+                padding: 0;
+                content: url(../static/logo_chractor2.png);
             }
+            .ubuntu-condensed-regular{display: none;}
         }
 
         .title_box{
@@ -313,7 +325,7 @@
             overflow: hidden;
             height: 165px;
             max-width: 134px;
-            margin-right: 30px;
+            margin: 12px;
             text-align: center;
             transition: transform 0.2s;
         }
@@ -323,11 +335,15 @@
         }
 
         .card-image {
-            width: 60%;
             height: auto;
             margin-top: 20px;
         }
 
+        .file_image{width: 40%; margin: 38px 0 13px 0;}
+        
+        
+
+        .logo_chractor2_image{width: 60%;}
 
         .card-title {
             font-size: 0.8em;

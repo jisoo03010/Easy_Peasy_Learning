@@ -146,6 +146,7 @@ def upload():
     # model_pt_file_name = upload_model_name().json['model_name'] # type: ignore
     print('model_pt_file_name :', model_pt_file_name)
     pp = predict(file_upload ,model_pt_file_name)
+    print("pp =======> " , pp)
     # for p in pp:
     #     predd = {"eum_data" : "{:.4f}%".format(p[0]*100), "ma_data" : "{:.4f}%".format(p[1]*100), "son_data" : "{:.4f}%".format(p[2]*100), "max_data" : "{}".format(pp.argmax(1).item() )}
     return pp

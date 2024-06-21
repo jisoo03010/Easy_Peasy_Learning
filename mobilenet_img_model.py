@@ -232,6 +232,7 @@ def test_model(test_dataloaders, device, model_file_path):
 
 
 def predict(image_bytes , model_file_path):
+    acu = {}
     print("\n image_bytes ==>" ,image_bytes)
     print("\n model_file_path ==>" ,model_file_path.get("model_name"))
     model = initialize_model() 
@@ -258,8 +259,8 @@ def predict(image_bytes , model_file_path):
     #softmax(1) shape을 다 합쳤을때 1이 안되서 소프트맥스를 사용해서 1을 만들어 준뒤에 
     # pred = F.softmax(pred)
     data = torch.sigmoid(pred).item() 
-    cat = (1 -  data ) * 100
-    dog = data * 100
+    dog = (1 -  data ) * 100
+    cat = data * 100
     print("cat ===>" , cat)
     print("dog ===>" , dog)
     acu = {
@@ -274,7 +275,8 @@ def predict(image_bytes , model_file_path):
         # print(pred.argmax(1),"번")
         
     # 몇 번째 인덱스에 몇 퍼센트인지 수치상으로 보여주기 
-    return jsonify(acu)
+    print("acu : " , acu)
+    return acu
     
 
 

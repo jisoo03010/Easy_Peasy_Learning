@@ -26,8 +26,20 @@ $(document).ready(function() {
     // Add event listeners to links
     links.on('click', function(event) {
         event.preventDefault();
-        const contentUrl = $(this).find('a').data('content');
+        const contentUrl = $(this ).find('a').data('content');
         loadContent(contentUrl);
+
+        // 메뉴 클릭시 스타일 효과 
+
+        $('a').css("color", "");
+        $(".main_menu ul li").css("background-color" , "")
+        $('.main_menu ul li > a > img').css("filter","");
+
+        $(this).css("background-color" , "#2B2D53")
+        $(this).find('a').css("color", "#1ADEC2");
+        $(this).find('a > img').css("filter", "invert(85%) sepia(85%) saturate(5323%) hue-rotate(90deg) brightness(96%) contrast(80%)");
+
+        console.log(this)
     });
 
     // Add event listeners to cards
@@ -185,41 +197,51 @@ $(document).ready(function() {
         return false;
     }).filter(':eq(0)').click();
 
-    
     // 파일 목록 가져오기 
-    $(document).on('click', '.main_menu > ul > li', function() {
+    function loadFileList() {
         $.ajax({
-            url: '/fileList',
+            url: '/fileList', // 파일 목록을 제공하는 API 엔드포인트 URL
             method: 'get',
             dataType: 'json',
             success: function (data, status, xhr) {
-                console.log("file name " , data)
-                // 성공 시 로딩 바 숨기기
-    
+                let fileContentArray = [];
+                $('#file_list').empty(); // 기존 파일 목록 비우기
+                $('#file_list2').empty(); // 기존 파일 목록 비우기
+
                 for (let i = 0; i < data.length; i++) {
-                    console.log(data[i]);
-    // 새로운 요소 생성
+                    // 각 파일에 대한 HTML 요소 생성
                     const newElement = `
-                    <div class="card" title="`+data[i]+`">
-                        <div class="radio-button"></div>
-                        <img src="../static/file2_icon.png" alt="Card Image" class="card-image">
-                        <div>
-                            <h2 class="file-title" >` + data[i]+ `</h2>
+                        <div class="card" title="${data[i]}">
+                            <div class="radio-button"></div>
+                            <img src="../static/file2_icon.png" alt="Card Image" class="card-image file_image">
+                            <div>
+                                <h2 class="file-title">${data[i]}</h2>
+                            </div>
                         </div>
-                    </div>
                     `;
-                    // 부모 요소에 새로운 요소 추가
-                    $('#file_list').append(newElement);
-                    $('#file_list2').append(newElement);
+                    fileContentArray.push(newElement);
                 }
+
+                // 배열을 문자열로 합치기
+                let combinedElements = fileContentArray.join('');
+
+                // 파일 목록을 화면에 추가
+                $('#file_list').html(combinedElements);
+                $('#file_list2').html(combinedElements);
             },
             error: function (data, status, err) {
-                console.log(data)
+                console.log(data);
             }
         });
+    }
 
-    })
-    
+    // 페이지 초기 로딩 시 파일 목록 불러오기
+    loadFileList();
+
+    // 페이지 리로드 시에도 파일 목록을 갱신하기 위해 동일한 함수 호출
+    $(document).on('click', '.main_menu > ul > li', function() {
+        loadFileList();
+    });
 
 
     // 파일 업로드
@@ -248,6 +270,8 @@ $(document).ready(function() {
         // const form = document.forms.frm;
         let $form = document.frm;
         const fData = new FormData();
+        alert($form[0])
+        alert($form[0].files[0])
         fData.append("file_lo", $form[0].files[0]);
         // fData.append("model_pt_file_name", JSON.stringify(check_data_arr));
         fData.append("model_pt_file_name", new Blob([JSON.stringify(check_data_arr)], {type: "application/json"}));
@@ -268,8 +292,8 @@ $(document).ready(function() {
                 console.log("file name " ,JSON.stringify(data.dog, null, 2))
                 // 성공 시 로딩 바 숨기기x
 
-                $("#ma").text("강아지 :" + JSON.stringify(data.cat, null, 2).slice(0, 5)+"%")
-                $("#eum").text("고양이 :" + JSON.stringify(data.dog, null, 2).slice(0, 5)+"%")
+                $("#ma").text("고양이:" + JSON.stringify(data.cat, null, 2).slice(0, 5)+"%")
+                $("#eum").text("강아지 :" + JSON.stringify(data.dog, null, 2).slice(0, 5)+"%")
 
                 
             },
